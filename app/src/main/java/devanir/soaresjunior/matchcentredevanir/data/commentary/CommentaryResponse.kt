@@ -25,7 +25,7 @@ data class CommentaryResponse(
         val awayScore: Int,
         val competitionId: Int,
         val competition: String,
-        val commentaryEntries: List<CommentaryEntry>
+        val commentaryEntries: ArrayList<CommentaryEntry>
     ) {
         data class CommentaryEntry(
             val type: String,

@@ -9,7 +9,7 @@ interface Repository {
 
     fun getMatch():LiveData<MatchInfoResponse>
 
-    fun getCommentary():LiveData<CommentaryResponse>
+    fun getCommentary():LiveData<CommentaryResponse.Data.CommentaryEntry>
 
     fun dispose()
 

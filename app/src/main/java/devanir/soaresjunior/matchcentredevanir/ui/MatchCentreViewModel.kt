@@ -6,11 +6,12 @@ import android.arch.lifecycle.ViewModel
 import devanir.soaresjunior.matchcentredevanir.data.commentary.CommentaryResponse
 import devanir.soaresjunior.matchcentredevanir.data.eventdetails.MatchInfoResponse
 import devanir.soaresjunior.matchcentredevanir.data.repository.Repository
+import io.reactivex.disposables.CompositeDisposable
 
 class MatchCentreViewModel(private val repository: Repository): ViewModel() {
 
-    val commentaryData: MutableLiveData<CommentaryResponse> = MutableLiveData()
-
+    val commentaryData: MutableLiveData<CommentaryResponse.Data.CommentaryEntry> = MutableLiveData()
+    private val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
     override fun onCleared() {
         super.onCleared()
@@ -19,7 +20,5 @@ class MatchCentreViewModel(private val repository: Repository): ViewModel() {
 
     fun showMatchInfo():LiveData<MatchInfoResponse> = repository.getMatch()
 
-    fun fetchCommentary() {
-
-    }
+    fun fetchCommentary():LiveData<CommentaryResponse.Data.CommentaryEntry> = repository.getCommentary()
 }

@@ -14,13 +14,26 @@ import io.reactivex.schedulers.Schedulers
 //Since using MVVM, here we have the repository pattern in action
 
 class RepositoryImpl(private val matchService: MatchService): Repository {
-    override fun getCommentary(): LiveData<CommentaryResponse> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+
 
     private val compositeDisposable = CompositeDisposable()
     private val matchLiveData = MutableLiveData<MatchInfoResponse>()
-    private val commentaryLiveData = MutableLiveData<CommentaryResponse>()
+    private val commentaryLiveData = MutableLiveData<CommentaryResponse.Data.CommentaryEntry>()
+
+   override fun getCommentary(): LiveData<CommentaryResponse.Data.CommentaryEntry> {
+        compositeDisposable.add(matchService.getCommentary()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io()).subscribe(
+                {
+                    commentaryLiveData.value = it
+                },
+                {
+                    handleError(it)
+                }
+            ))
+        return commentaryLiveData    }
+
+
 
     override fun getMatch(): LiveData<MatchInfoResponse> {
         //dispose of the data after it was used, stops wasting resources fetching data when app is stopped.
@@ -36,6 +49,9 @@ class RepositoryImpl(private val matchService: MatchService): Repository {
             ))
         return matchLiveData
     }
+
+
+
 
 
 

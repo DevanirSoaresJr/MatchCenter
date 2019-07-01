@@ -46,10 +46,9 @@ class MatchCentreActivity : AppCompatActivity() {
             tvTeams.text= homeTeam + someSpace + versus + someSpace + awayTeam
         })
        rvCommentary.layoutManager = LinearLayoutManager(this)
+       val commentaryAdapter = CommentaryAdapter()
        viewModel.commentaryData.observe(this, Observer{
-                   it?.apply{
-                       val commentaryAdapter = CommentaryAdapter(it?.data.commentaryEntries)
-                   }
+                   commentaryAdapter.setData(it.data.commentaryEntries)
 
        })
 
