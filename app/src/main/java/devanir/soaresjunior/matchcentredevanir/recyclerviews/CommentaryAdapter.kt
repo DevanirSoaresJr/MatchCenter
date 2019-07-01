@@ -11,9 +11,9 @@ import kotlinx.android.synthetic.main.item_commentary.view.*
 
 class CommentaryAdapter : RecyclerView.Adapter<CommentaryAdapter.CommentaryVH>(){
 
-    private val commentaryList: List<CommentaryResponse.Data.CommentaryEntry> = arrayListOf()
+    private val commentaryList: List<CommentaryResponse> = ArrayList()
 
-    fun setData(commentaryList:ArrayList<CommentaryResponse.Data.CommentaryEntry>){
+    fun setData(commentaryList:ArrayList<CommentaryResponse>){
         commentaryList.clear()
         commentaryList.addAll(commentaryList)
         notifyDataSetChanged()
@@ -37,8 +37,8 @@ class CommentaryAdapter : RecyclerView.Adapter<CommentaryAdapter.CommentaryVH>()
 
        private val tvComment:TextView = view.findViewById(R.id.tvComment)
 
-        fun bind(commentaryEntry: CommentaryResponse.Data.CommentaryEntry){
-            tvComment.text=commentaryEntry.comment
+        fun bind(commentaryList: CommentaryResponse){
+            tvComment.text=commentaryList.data.commentaryEntries.toString()
         }
     }
 }

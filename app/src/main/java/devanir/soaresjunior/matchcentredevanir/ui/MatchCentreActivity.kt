@@ -11,6 +11,7 @@ import devanir.soaresjunior.matchcentredevanir.di.ActivityModule
 import devanir.soaresjunior.matchcentredevanir.di.DaggerActivityComponent
 import devanir.soaresjunior.matchcentredevanir.recyclerviews.CommentaryAdapter
 import kotlinx.android.synthetic.main.activity_matchcentre.*
+import kotlinx.android.synthetic.main.item_commentary.*
 import javax.inject.Inject
 
 class MatchCentreActivity : AppCompatActivity() {
@@ -48,8 +49,8 @@ class MatchCentreActivity : AppCompatActivity() {
        rvCommentary.adapter = commentaryAdapter
        rvCommentary.layoutManager = LinearLayoutManager(this)
 
-       viewModel.commentaryData.observe(this, Observer{
-                   commentaryAdapter.setData(commentaryList = ArrayList())
+       viewModel.fetchCommentary().observe(this, Observer{
+
 
        })
 

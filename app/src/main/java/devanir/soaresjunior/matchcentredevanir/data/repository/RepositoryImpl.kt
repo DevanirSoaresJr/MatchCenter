@@ -18,14 +18,14 @@ class RepositoryImpl(private val matchService: MatchService): Repository {
 
     private val compositeDisposable = CompositeDisposable()
     private val matchLiveData = MutableLiveData<MatchInfoResponse>()
-    private val commentaryLiveData = MutableLiveData<CommentaryResponse.Data.CommentaryEntry>()
+    private val commentaryLiveData = MutableLiveData<CommentaryResponse>()
 
-   override fun getCommentary(): LiveData<CommentaryResponse.Data.CommentaryEntry> {
+   override fun getCommentary(): LiveData<CommentaryResponse> {
         compositeDisposable.add(matchService.getCommentary()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io()).subscribe(
                 {
-                    commentaryLiveData.value = CommentaryResponse.Data.CommentaryEntry("commentary","success", 3,"3")
+                    commentaryLiveData.value = it
                 },
                 {
                     handleError(it)

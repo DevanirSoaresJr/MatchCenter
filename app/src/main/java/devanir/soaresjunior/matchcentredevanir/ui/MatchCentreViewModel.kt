@@ -10,7 +10,7 @@ import io.reactivex.disposables.CompositeDisposable
 
 class MatchCentreViewModel(private val repository: Repository): ViewModel() {
 
-    val commentaryData: MutableLiveData<CommentaryResponse.Data.CommentaryEntry> = MutableLiveData()
+    val commentaryData: MutableLiveData<CommentaryResponse> = MutableLiveData()
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
     override fun onCleared() {
@@ -20,5 +20,5 @@ class MatchCentreViewModel(private val repository: Repository): ViewModel() {
 
     fun showMatchInfo():LiveData<MatchInfoResponse> = repository.getMatch()
 
-    fun fetchCommentary():LiveData<CommentaryResponse.Data.CommentaryEntry> = repository.getCommentary()
+    fun fetchCommentary():LiveData<CommentaryResponse> = repository.getCommentary()
 }
