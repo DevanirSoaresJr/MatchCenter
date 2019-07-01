@@ -1,4 +1,4 @@
-package devanir.soaresjunior.matchcentredevanir.recyclerviews
+package devanir.soaresjunior.matchcentredevanir.rvAdapters
 
 import android.annotation.SuppressLint
 import android.support.v7.widget.RecyclerView
@@ -8,9 +8,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import devanir.soaresjunior.matchcentredevanir.R
 import devanir.soaresjunior.matchcentredevanir.data.commentary.CommentaryResponse
-import kotlinx.android.synthetic.main.item_commentary.view.*
 
-class CommentaryAdapter(private val commentaryList: List<CommentaryResponse.Data.CommentaryEntry>) : RecyclerView.Adapter<CommentaryAdapter.CommentaryVH>(){
+class CommentaryAdapter(private val commentaryList: List<CommentaryResponse.Data.CommentaryEntry>):
+    RecyclerView.Adapter<CommentaryAdapter.CommentaryVH>(){
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommentaryVH {
