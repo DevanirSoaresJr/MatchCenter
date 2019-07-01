@@ -1,17 +1,17 @@
 package devanir.soaresjunior.matchcentredevanir.ui
 
+import android.annotation.SuppressLint
 import android.arch.lifecycle.Observer
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
-import com.squareup.picasso.Picasso
 import devanir.soaresjunior.matchcentredevanir.R
-import devanir.soaresjunior.matchcentredevanir.data.commentary.CommentaryResponse
 import devanir.soaresjunior.matchcentredevanir.di.ActivityModule
 import devanir.soaresjunior.matchcentredevanir.di.DaggerActivityComponent
 import devanir.soaresjunior.matchcentredevanir.recyclerviews.CommentaryAdapter
+import devanir.soaresjunior.matchcentredevanir.recyclerviews.HomeTeamAdapter
 import kotlinx.android.synthetic.main.activity_matchcentre.*
-import kotlinx.android.synthetic.main.item_commentary.*
 import javax.inject.Inject
 
 class MatchCentreActivity : AppCompatActivity() {
@@ -19,7 +19,9 @@ class MatchCentreActivity : AppCompatActivity() {
     @Inject
     lateinit var viewModel: MatchCentreViewModel
 
-    private val commentaryAdapter = CommentaryAdapter()
+    private lateinit var commentaryAdapter: CommentaryAdapter
+    private lateinit var homeTeamAdapter: HomeTeamAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_matchcentre)
@@ -31,6 +33,7 @@ class MatchCentreActivity : AppCompatActivity() {
 
     }
 
+   @SuppressLint("SetTextI18n")
    override fun onResume() {
         super.onResume()
 
@@ -43,13 +46,25 @@ class MatchCentreActivity : AppCompatActivity() {
             val versus = "V.S."
             val someSpace = " "
             tvCompetition.text=it?.data?.competition
-            tvScore.text = teamHomeScore + someSpace + colonChar + someSpace + teamAwayScore
+            //tvScore.text = teamHomeScore + someSpace + colonChar + someSpace + teamAwayScore
+            tvScore.text = "$teamHomeScore : $teamAwayScore"
             tvTeams.text= homeTeam + someSpace + versus + someSpace + awayTeam
+
+            homeTeamAdapter = HomeTeamAdapter(it?.data?.homeTeam?.players!!)
+
+            rvHomeTeam.apply {
+                layoutManager = LinearLayoutManager(this@MatchCentreActivity)
+                adapter = homeTeamAdapter
+                addItemDecoration(DividerItemDecoration(this@MatchCentreActivity, LinearLayoutManager.VERTICAL))
+            }
         })
-       rvCommentary.adapter = commentaryAdapter
-       rvCommentary.layoutManager = LinearLayoutManager(this)
 
        viewModel.fetchCommentary().observe(this, Observer{
+            commentaryAdapter = CommentaryAdapter(it?.data?.commentaryEntries!!)
+
+           rvCommentary.adapter = commentaryAdapter
+           rvCommentary.layoutManager = LinearLayoutManager(this)
+           rvCommentary.addItemDecoration(DividerItemDecoration(this@MatchCentreActivity, LinearLayoutManager.VERTICAL))
 
 
        })
