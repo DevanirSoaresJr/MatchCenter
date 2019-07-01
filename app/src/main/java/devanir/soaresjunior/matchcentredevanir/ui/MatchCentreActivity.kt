@@ -18,7 +18,7 @@ class MatchCentreActivity : AppCompatActivity() {
     @Inject
     lateinit var viewModel: MatchCentreViewModel
 
-
+    private val commentaryAdapter = CommentaryAdapter()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_matchcentre)
@@ -45,10 +45,11 @@ class MatchCentreActivity : AppCompatActivity() {
             tvScore.text = teamHomeScore + someSpace + colonChar + someSpace + teamAwayScore
             tvTeams.text= homeTeam + someSpace + versus + someSpace + awayTeam
         })
+       rvCommentary.adapter = commentaryAdapter
        rvCommentary.layoutManager = LinearLayoutManager(this)
-       val commentaryAdapter = CommentaryAdapter()
+
        viewModel.commentaryData.observe(this, Observer{
-                   commentaryAdapter.setData(it.data.commentaryEntries)
+                   commentaryAdapter.setData(commentaryList = ArrayList())
 
        })
 

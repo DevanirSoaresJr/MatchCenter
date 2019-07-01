@@ -25,7 +25,7 @@ class RepositoryImpl(private val matchService: MatchService): Repository {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io()).subscribe(
                 {
-                    commentaryLiveData.value = it
+                    commentaryLiveData.value = CommentaryResponse.Data.CommentaryEntry("commentary","success", 3,"3")
                 },
                 {
                     handleError(it)

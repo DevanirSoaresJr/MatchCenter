@@ -12,5 +12,5 @@ interface MatchService {
     @GET(EVENT_ENDPOINT)
     fun getMatch():Single<MatchInfoResponse>
     @GET(COMMENTARY_ENDPOINT)
-    fun getCommentary():Single<CommentaryResponse.Data.CommentaryEntry>
+    fun getCommentary():Single<CommentaryResponse>
 }
